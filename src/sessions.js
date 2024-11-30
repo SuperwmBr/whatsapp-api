@@ -12,7 +12,7 @@ const validateSession = async (sessionId) => {
 
     // Session not Connected 😢
     if (!sessions.has(sessionId) || !sessions.get(sessionId)) {
-      returnData.message = 'session_not_found'
+      returnData.message = '😢 session_not_found'
       return returnData
     }
 
@@ -34,7 +34,7 @@ const validateSession = async (sessionId) => {
         ])
         break
       } catch (error) {
-        if (maxRetry === 2) {
+        if (maxRetry === 3) {
           return { success: false, state: null, message: 'session closed' }
         }
         maxRetry++
@@ -44,13 +44,13 @@ const validateSession = async (sessionId) => {
     const state = await client.getState()
     returnData.state = state
     if (state !== 'CONNECTED') {
-      returnData.message = 'session_not_connected'
+      returnData.message = '😢 session_not_connected'
       return returnData
     }
 
     // Session Connected 🎉
     returnData.success = true
-    returnData.message = 'session_connected'
+    returnData.message = '🎉 session_connected'
     return returnData
   } catch (error) {
     console.log(error)
